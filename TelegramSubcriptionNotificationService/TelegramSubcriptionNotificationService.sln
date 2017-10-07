@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramSubcriptionNotificationService", "TelegramSubcriptionNotificationService\TelegramSubcriptionNotificationService.csproj", "{F5B96597-6CBD-4BB5-B731-3D22C323BD2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramUtility", "TelegramUtility\TelegramUtility.csproj", "{05130FAA-9D58-4232-B508-D5D657A78667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{F5B96597-6CBD-4BB5-B731-3D22C323BD2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5B96597-6CBD-4BB5-B731-3D22C323BD2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5B96597-6CBD-4BB5-B731-3D22C323BD2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05130FAA-9D58-4232-B508-D5D657A78667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05130FAA-9D58-4232-B508-D5D657A78667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05130FAA-9D58-4232-B508-D5D657A78667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05130FAA-9D58-4232-B508-D5D657A78667}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DA527EF-9D22-42B7-ABB8-310D98B9E4F5}
 	EndGlobalSection
 EndGlobal

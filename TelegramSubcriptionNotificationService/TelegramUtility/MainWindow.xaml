@@ -1,0 +1,10 @@
+﻿<Window x:Name="TelegramUtilityWindow" x:Class="TelegramUtility.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TelegramUtility"
+        mc:Ignorable="d"
+        Title="Telegram Utility" Height="350" Width="525" Loaded="TelegramUtilityWindow_Loaded">
+    <Frame x:Name="MainFrame" Margin="10,10,10,10" Height="300" Width="495"></Frame>
+</Window>
