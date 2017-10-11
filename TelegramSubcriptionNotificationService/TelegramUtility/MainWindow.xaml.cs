@@ -27,6 +27,13 @@ namespace TelegramUtility
 
         private void TelegramUtilityWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            OnConnected onClientConnected = OnClientConnected;
+            TelegramHelper THelper = new TelegramHelper(onClientConnected);
+            Application.Current.Properties.Add("THelper", THelper);
+        }
+
+        private void OnClientConnected()
+        {
             MainFrame.NavigationService.Navigate(new AuthenticationPage());
         }
     }

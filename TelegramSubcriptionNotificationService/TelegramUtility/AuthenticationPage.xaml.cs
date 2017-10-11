@@ -20,6 +20,8 @@ namespace TelegramUtility
     /// </summary>
     public partial class AuthenticationPage : Page
     {
+        private TelegramHelper THelper = (TelegramHelper)Application.Current.Properties["THelper"];
+
         public AuthenticationPage()
         {
             InitializeComponent();
@@ -29,7 +31,7 @@ namespace TelegramUtility
         {
             try
             {
-                await TelegramHelper.ValidateOTP(PhoneNumber.Text, OTP.Text);
+                await THelper.ValidateOTP(PhoneNumber.Text, OTP.Text);
             }
             catch (Exception)
             {
@@ -45,7 +47,7 @@ namespace TelegramUtility
         {
             try
             {
-                await TelegramHelper.RequestForOTPAsync(PhoneNumber.Text);
+                await THelper.RequestForOTPAsync(PhoneNumber.Text);
 
                 PhoneNumber.IsEnabled = false;
                 OTPRequestButton.Visibility = Visibility.Hidden;
