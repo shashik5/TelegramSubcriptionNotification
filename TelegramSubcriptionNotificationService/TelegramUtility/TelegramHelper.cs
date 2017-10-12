@@ -1,27 +1,31 @@
-﻿using System;
+﻿using OpenTl.Schema;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using Telegram.Net.Core;
 using Telegram.Net.Core.MTProto;
+using Telegram.Net.Core.Requests;
 using Windows.UI.Notifications;
 
 namespace TelegramUtility
 {
-    public delegate void OnConnected();
+    public delegate void Callback();
     public class TelegramHelper
     {
         private SessionStore Session;
         private TelegramClient Client;
         private AuthSentCode Hash;
-        private OnConnected CallbackOnConnected;
+        private Callback CallbackOnConnected;
+        private Callback CallbackOnAuthenticated;
 
-        public TelegramHelper(OnConnected callbackOnConnected)
+        public TelegramHelper(Callback callbackOnConnected, Callback callbackOnAuthenticated)
         {
             Session = new SessionStore();
 
             Client = new TelegramClient(Session, 194798, "fd58bfc486f125f1677c40af959472c8", new DeviceInfo("D11", "S11", "V11", "en-US"), "149.154.167.40:443");
 
             CallbackOnConnected = callbackOnConnected;
+            CallbackOnAuthenticated = callbackOnAuthenticated;
 
             Client.UpdateMessage += Client_UpdateMessage;
             Client.ConnectionStateChanged += Client_ConnectionStateChanged;
@@ -52,6 +56,10 @@ namespace TelegramUtility
                 if (!string.IsNullOrEmpty(Hash.phoneCodeHash))
                 {
                     var auth = await Client.SignIn(registeredMobileNumber, Hash.phoneCodeHash, code);
+                    if (Client.IsUserAuthorized())
+                    {
+                        CallbackOnAuthenticated();
+                    }
                 }
                 else
                 {
@@ -69,7 +77,15 @@ namespace TelegramUtility
         {
             if (e.isConnected)
             {
-                CallbackOnConnected();
+                if (Client.IsUserAuthorized())
+                {
+                    CallbackOnAuthenticated();
+                    //InitUpdateListener();
+                }
+                else
+                {
+                    CallbackOnConnected();
+                }
             };
         }
 
@@ -95,6 +111,17 @@ namespace TelegramUtility
 
             ToastNotification toast = new ToastNotification(doc);
             ToastNotificationManager.CreateToastNotifier("Cyberoam Auth Manager").Show(toast);
+        }
+
+        private async void InitUpdateListener()
+        {
+            var updatesStateRequest = new GetUpdatesStateRequest();
+            await Client.SendRpcRequest(updatesStateRequest);
+            var initialState = (UpdatesStateConstructor)updatesStateRequest.updatesState;
+
+            var request = new GetUpdatesDifferenceRequest(initialState.pts, initialState.date, initialState.qts);
+            await Client.SendRpcRequest(request);
+            
         }
     }
 }

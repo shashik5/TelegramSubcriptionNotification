@@ -20,6 +20,8 @@ namespace TelegramUtility
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool IsAuthenticationPageLoaded = false;
+        private bool IsWindowMinimized = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -27,14 +29,27 @@ namespace TelegramUtility
 
         private void TelegramUtilityWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            OnConnected onClientConnected = OnClientConnected;
-            TelegramHelper THelper = new TelegramHelper(onClientConnected);
+            Callback onClientConnected = OnClientConnected, onUserAuthenticated = OnUserAuthenticated;
+            TelegramHelper THelper = new TelegramHelper(onClientConnected, onUserAuthenticated);
             Application.Current.Properties.Add("THelper", THelper);
         }
 
         private void OnClientConnected()
         {
-            MainFrame.NavigationService.Navigate(new AuthenticationPage());
+            if (!IsAuthenticationPageLoaded)
+            {
+                MainFrame.NavigationService.Navigate(new AuthenticationPage());
+                IsAuthenticationPageLoaded = true;
+            }
+        }
+
+        private void OnUserAuthenticated()
+        {
+            if (!IsWindowMinimized)
+            {
+                Visibility = Visibility.Hidden;
+                IsWindowMinimized = true;
+            }
         }
     }
 }
